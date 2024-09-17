@@ -18,7 +18,7 @@ export interface GeolocationResponse {
 }
 
 export interface RoadRecordType extends Document {
-  userId: string;
+  deviceId: string;
   distance: number;
   averageSpeed: number;
   startTime: Date;
@@ -27,7 +27,7 @@ export interface RoadRecordType extends Document {
 }
 
 export interface RoadRecordModel extends Model<RoadRecordType> {
-  build(record: GeolocationResponse[], userId: string): RoadRecordType;
+  build(record: GeolocationResponse[], deviceId: string): RoadRecordType;
 }
 
 export interface Waypoint {

@@ -11,10 +11,20 @@ app.use(express.json());
 
 app.post('/summarize', async (req, res) => {
   const record: GeolocationResponse[] = req.body.record;
-  const userId: string = req.body.userId;
-  const newRecord = RoadRecord.build(record, userId);
-  await newRecord.save();
-  return res.status(200).send({ res: true });
+  const deviceId: string = req.body.deviceId;
+  if (!record || !deviceId) throw new Error('Missing credentials');
+
+  const analyzedRecord = RoadRecord.build(record, deviceId);
+  await analyzedRecord.save();
+  return res.status(200).send(analyzedRecord);
+});
+
+app.post('/device-records', async (req, res) => {
+  const deviceId = req.body.deviceId;
+  if (!deviceId) throw new Error('Missing credentials');
+
+  const deviceRecords = await RoadRecord.find({ deviceId });
+  return res.status(200).send(deviceRecords);
 });
 
 app.all('*', () => {

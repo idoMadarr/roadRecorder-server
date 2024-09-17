@@ -8,7 +8,7 @@ import { analyzeRoadRecord } from '../utils/haversineFormula';
 
 const roadRecordSchema = new Schema(
   {
-    userId: {
+    deviceId: {
       type: String,
       require: true,
     },
@@ -53,13 +53,13 @@ const roadRecordSchema = new Schema(
 
 roadRecordSchema.statics.build = (
   record: GeolocationResponse[],
-  userId: string
+  deviceId: string
 ): RoadRecordType => {
-  const startTime = new Date(record[0].timestamp);
-  const { distance, averageSpeed, waypoints } = analyzeRoadRecord(record);
+  const { distance, averageSpeed, startTime, waypoints } =
+    analyzeRoadRecord(record);
 
   return new RoadRecord({
-    userId,
+    deviceId,
     distance,
     averageSpeed,
     startTime,
