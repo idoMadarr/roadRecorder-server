@@ -19,6 +19,21 @@ app.post('/summarize', async (req, res) => {
   return res.status(200).send(analyzedRecord);
 });
 
+app.post('/screen-shot', async (req, res) => {
+  const recordId = req.body.recordId;
+  const viewShot = req.body.viewShot;
+  if (!recordId || !viewShot) throw new Error('Missing credentials');
+
+  const updateRecord = await RoadRecord.findByIdAndUpdate(
+    recordId,
+    {
+      image: viewShot,
+    },
+    { new: true }
+  );
+  return res.status(200).send(updateRecord);
+});
+
 app.post('/device-records', async (req, res) => {
   const deviceId = req.body.deviceId;
   if (!deviceId) throw new Error('Missing credentials');

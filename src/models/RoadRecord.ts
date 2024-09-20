@@ -45,6 +45,10 @@ const roadRecordSchema = new Schema(
       ],
       required: true,
     },
+    image: {
+      type: String,
+      default: null,
+    },
   },
   {
     versionKey: false,

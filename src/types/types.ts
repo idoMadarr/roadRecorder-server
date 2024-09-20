@@ -24,6 +24,7 @@ export interface RoadRecordType extends Document {
   startTime: Date;
   endTime: Date;
   wayponits: Waypoint[];
+  image?: string | null;
 }
 
 export interface RoadRecordModel extends Model<RoadRecordType> {
