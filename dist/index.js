@@ -48,6 +48,8 @@ app.post('/summarize', (req, res) => __awaiter(void 0, void 0, void 0, function*
     const deviceId = req.body.deviceId;
     if (!record || !deviceId)
         throw new Error('Missing credentials');
+    if (record.length < 2)
+        throw new Error('Invalid record length');
     const analyzedRecord = RoadRecord_1.RoadRecord.build(record, deviceId);
     yield analyzedRecord.save();
     return res.status(200).send(analyzedRecord);
