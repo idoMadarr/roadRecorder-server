@@ -13,6 +13,7 @@ app.post('/summarize', async (req, res) => {
   const record: GeolocationResponse[] = req.body.record;
   const deviceId: string = req.body.deviceId;
   if (!record || !deviceId) throw new Error('Missing credentials');
+  if (record.length < 2) throw new Error('Invalid record length');
 
   const analyzedRecord = RoadRecord.build(record, deviceId);
   await analyzedRecord.save();

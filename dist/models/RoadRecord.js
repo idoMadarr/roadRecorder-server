@@ -23,7 +23,7 @@ const roadRecordSchema = new mongoose_1.Schema({
     },
     endTime: {
         type: Date,
-        default: new Date(),
+        require: true,
     },
     waypoints: {
         type: [
@@ -49,12 +49,13 @@ const roadRecordSchema = new mongoose_1.Schema({
     versionKey: false,
 });
 roadRecordSchema.statics.build = (record, deviceId) => {
-    const { distance, averageSpeed, startTime, waypoints } = (0, haversineFormula_1.analyzeRoadRecord)(record);
+    const { distance, averageSpeed, startTime, endTime, waypoints } = (0, haversineFormula_1.analyzeRoadRecord)(record);
     return new exports.RoadRecord({
         deviceId,
         distance,
         averageSpeed,
         startTime,
+        endTime,
         waypoints,
     });
 };

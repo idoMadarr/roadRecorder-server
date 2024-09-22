@@ -27,7 +27,7 @@ const roadRecordSchema = new Schema(
     },
     endTime: {
       type: Date,
-      default: new Date(),
+      require: true,
     },
     waypoints: {
       type: [
@@ -59,7 +59,7 @@ roadRecordSchema.statics.build = (
   record: GeolocationResponse[],
   deviceId: string
 ): RoadRecordType => {
-  const { distance, averageSpeed, startTime, waypoints } =
+  const { distance, averageSpeed, startTime, endTime, waypoints } =
     analyzeRoadRecord(record);
 
   return new RoadRecord({
@@ -67,6 +67,7 @@ roadRecordSchema.statics.build = (
     distance,
     averageSpeed,
     startTime,
+    endTime,
     waypoints,
   });
 };

@@ -87,5 +87,6 @@ export const analyzeRoadRecord = (record: GeolocationResponse[]) => {
     averageSpeed: calculateAverageSpeed(record),
     waypoints: buildDirectionWaypoints(record),
     startTime: new Date(record[0].timestamp),
+    endTime: new Date(record[record.length - 1].timestamp),
   };
 };
