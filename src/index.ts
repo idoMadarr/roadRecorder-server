@@ -17,12 +17,10 @@ app.use(express.static(path.join(__dirname, 'policy')));
 
 app.get('/privacy-policy', (_req, res) => {
   try {
-    const policyFile = path.join(__dirname, 'policy', 'privacy-policy.pdf');
+    const policyFile = path.resolve(__dirname, 'policy', 'privacy-policy.pdf');
     res.setHeader('Content-Type', 'application/pdf');
-    console.log(policyFile, '?');
     res.sendFile(policyFile);
   } catch (error) {
-    console.log(error, 'error');
     res.status(401).send(error);
   }
 });
