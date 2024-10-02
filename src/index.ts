@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
+import cors from 'cors';
 import * as dotenv from 'dotenv';
 import 'express-async-errors';
 import { GeolocationResponse } from './types/types';
@@ -8,6 +9,7 @@ import mongoose from 'mongoose';
 
 dotenv.config();
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Serving 'policy' folder as a static route
