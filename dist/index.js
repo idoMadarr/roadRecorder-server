@@ -49,9 +49,14 @@ app.use(express_1.default.json());
 // Serving 'policy' folder as a static route
 app.use(express_1.default.static(path_1.default.join(__dirname, 'policy')));
 app.get('/privacy-policy', (_req, res) => {
-    const policyFile = path_1.default.join(__dirname, 'policy', 'privacy-policy.pdf');
-    res.setHeader('Content-Type', 'application/pdf');
-    res.sendFile(policyFile);
+    try {
+        const policyFile = path_1.default.join(__dirname, 'policy', 'privacy-policy.pdf');
+        res.setHeader('Content-Type', 'application/pdf');
+        res.sendFile(policyFile);
+    }
+    catch (error) {
+        res.status(401).send(error);
+    }
 });
 app.post('/summarize', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const record = req.body.record;
