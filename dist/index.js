@@ -52,9 +52,11 @@ app.get('/privacy-policy', (_req, res) => {
     try {
         const policyFile = path_1.default.join(__dirname, 'policy', 'privacy-policy.pdf');
         res.setHeader('Content-Type', 'application/pdf');
+        console.log(policyFile, '?');
         res.sendFile(policyFile);
     }
     catch (error) {
+        console.log(error, 'error');
         res.status(401).send(error);
     }
 });
