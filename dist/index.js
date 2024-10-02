@@ -36,6 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const path_1 = __importDefault(require("path"));
 const dotenv = __importStar(require("dotenv"));
 require("express-async-errors");
 const RoadRecord_1 = require("./models/RoadRecord");
@@ -43,6 +44,13 @@ const mongoose_1 = __importDefault(require("mongoose"));
 dotenv.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+// Serving 'policy' folder as a static route
+app.use(express_1.default.static(path_1.default.join(__dirname, 'policy')));
+app.get('/privacy-policy', (_req, res) => {
+    const policyFile = path_1.default.join(__dirname, 'policy', 'privacy-policy.pdf');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.sendFile(policyFile);
+});
 app.post('/summarize', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const record = req.body.record;
     const deviceId = req.body.deviceId;

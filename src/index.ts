@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import path from 'path';
 import * as dotenv from 'dotenv';
 import 'express-async-errors';
 import { GeolocationResponse } from './types/types';
@@ -8,6 +9,15 @@ import mongoose from 'mongoose';
 dotenv.config();
 const app = express();
 app.use(express.json());
+
+// Serving 'policy' folder as a static route
+app.use(express.static(path.join(__dirname, 'policy')));
+
+app.get('/privacy-policy', (_req, res) => {
+  const policyFile = path.join(__dirname, 'policy', 'privacy-policy.pdf');
+  res.setHeader('Content-Type', 'application/pdf');
+  res.sendFile(policyFile);
+});
 
 app.post('/summarize', async (req, res) => {
   const record: GeolocationResponse[] = req.body.record;
